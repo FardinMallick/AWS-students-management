@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Trash</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="sidebar">
+
+        <h2>
+
+            Deployed By Fardin
+
+        </h2>
+
+        <ul>
+
+            <li>
+                <a href="/">Dashboard</a>
+            </li>
+
+            <li>
+                <a href="/students">Students</a>
+            </li>
+
+            <li>
+                <a href="/trash">Trash</a>
+            </li>
+
+        </ul>
+
+    </div>
+
+    <div class="main-content">
+
+        <div class="navbar">
+
+            <h1>
+
+                Trash Students
+
+            </h1>
+
+        </div>
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Name</th>
+
+                        <th>Email</th>
+
+                        <th>Course</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for student in students %}
+
+                    <tr>
+
+                        <td>{{ student.id }}</td>
+
+                        <td>
+
+                            {{ student.first_name }}
+                            {{ student.last_name }}
+
+                        </td>
+
+                        <td>{{ student.email }}</td>
+
+                        <td>{{ student.course }}</td>
+
+                        <td class="action-buttons">
+
+                            <a
+                                href="/restore/{{ student.id }}"
+                                class="edit-btn"
+                            >
+
+                                ♻️
+
+                            </a>
+
+                            <a
+                                href="/permanent-delete/{{ student.id }}"
+                                class="delete-btn"
+                                onclick="return confirm('Permanent delete?')"
+                            >
+
+                                🗑️
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

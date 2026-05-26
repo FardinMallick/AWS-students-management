@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Student</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="main-content">
+
+    <div class="navbar">
+
+        <h1>Edit Student</h1>
+
+    </div>
+
+    <form method="POST"
+          class="student-form">
+
+        <input type="text"
+               name="student_id"
+               value="{{ student.student_id }}">
+
+        <input type="text"
+               name="first_name"
+               value="{{ student.first_name }}">
+
+        <input type="text"
+               name="last_name"
+               value="{{ student.last_name }}">
+
+        <input type="text"
+               name="gender"
+               value="{{ student.gender }}">
+
+        <input type="email"
+               name="email"
+               value="{{ student.email }}">
+
+        <input type="text"
+               name="phone"
+               value="{{ student.phone }}">
+
+        <input type="text"
+               name="course"
+               value="{{ student.course }}">
+
+        <input type="text"
+               name="department"
+               value="{{ student.department }}">
+
+        <input type="text"
+               name="year_of_study"
+               value="{{ student.year_of_study }}">
+
+        <input type="date"
+               name="admission_date">
+
+        <button type="submit">
+
+            Update Student
+
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>
