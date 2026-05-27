@@ -1,5 +1,7 @@
 import os
 
+from datetime import date
+
 from werkzeug.utils import secure_filename
 
 from flask import Blueprint
@@ -10,7 +12,9 @@ from flask import url_for
 from flask import session
 
 from app import db
+
 from app.models.student import Student
+from app.models.attendance import Attendance
 
 
 main = Blueprint("main", __name__)
@@ -38,13 +42,15 @@ ALLOWED_EXTENSIONS = {
 def allowed_file(filename):
 
     return (
-        "." in filename
-          and 
 
-    filename.rsplit(
-        ".",
-        1
-    )[1].lower() in ALLOWED_EXTENSIONS
+        "." in filename
+
+        and
+
+        filename.rsplit(
+            ".",
+            1
+        )[1].lower() in ALLOWED_EXTENSIONS
     )
 
 
@@ -320,6 +326,7 @@ def edit_student(id):
         db.session.commit()
 
         return redirect(
+
             url_for(
                 "main.student_profile",
                 id=student.id
@@ -354,6 +361,70 @@ def student_profile(id):
         "student_profile.html",
 
         student=student
+    )
+
+
+# =========================
+# ATTENDANCE PAGE
+# =========================
+
+@main.route("/attendance")
+def attendance():
+
+    if "user" not in session:
+
+        return redirect(
+            url_for("main.login")
+        )
+
+    students = Student.query.filter_by(
+        is_deleted=False
+    ).all()
+
+    attendance_data = Attendance.query.order_by(
+        Attendance.id.desc()
+    ).all()
+
+    return render_template(
+
+        "attendance.html",
+
+        students=students,
+
+        attendance_data=attendance_data
+    )
+
+
+# =========================
+# MARK ATTENDANCE
+# =========================
+
+@main.route(
+    "/mark-attendance/<int:id>/<status>"
+)
+def mark_attendance(id, status):
+
+    if "user" not in session:
+
+        return redirect(
+            url_for("main.login")
+        )
+
+    attendance = Attendance(
+
+        student_id=id,
+
+        attendance_date=date.today(),
+
+        status=status
+    )
+
+    db.session.add(attendance)
+
+    db.session.commit()
+
+    return redirect(
+        url_for("main.attendance")
     )
 
 
