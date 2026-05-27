@@ -21,7 +21,11 @@
 
     <div class="sidebar">
 
-        <h2>Deployed By Fardin</h2>
+        <h2 class="logo-text">
+
+            Deployed By Fardin
+
+        </h2>
 
         <ul>
 
@@ -31,6 +35,10 @@
 
             <li>
                 <a href="/students">Students</a>
+            </li>
+
+            <li>
+                <a href="/trash">Trash</a>
             </li>
 
             <li>
@@ -50,7 +58,9 @@
     </div>
 
 
-    <!-- Main Content -->
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
 
     <div class="main-content">
 
@@ -59,52 +69,203 @@
         <div class="navbar">
 
             <h1 class="main-title">
+
                 Dashboard
+
             </h1>
 
         </div>
 
 
-        <!-- Cards -->
+        <!-- =========================
+             DASHBOARD CARDS
+        ========================= -->
 
-        <div class="cards">
+        <div class="dashboard-cards">
 
-            <div class="card">
+            <!-- Total Students -->
 
-                <h2>{{ students_count }}</h2>
+            <div class="dashboard-card">
 
-                <p>Total Students</p>
+                <div class="card-glow"></div>
+
+                <div class="card-icon">
+
+                    🎓
+
+                </div>
+
+                <div class="card-info">
+
+                    <h2>
+
+                        {{ students_count }}
+
+                    </h2>
+
+                    <p>
+
+                        Total Students
+
+                    </p>
+
+                </div>
 
             </div>
 
-            <div class="card">
 
-                <h2>12</h2>
+            <!-- Male Students -->
 
-                <p>Total Courses</p>
+            <div class="dashboard-card">
+
+                <div class="card-glow"></div>
+
+                <div class="card-icon">
+
+                    👨
+
+                </div>
+
+                <div class="card-info">
+
+                    <h2>
+
+                        {{ male_students }}
+
+                    </h2>
+
+                    <p>
+
+                        Male Students
+
+                    </p>
+
+                </div>
 
             </div>
 
-            <div class="card">
 
-                <h2>5</h2>
+            <!-- Female Students -->
 
-                <p>Departments</p>
+            <div class="dashboard-card">
+
+                <div class="card-glow"></div>
+
+                <div class="card-icon">
+
+                    👩
+
+                </div>
+
+                <div class="card-info">
+
+                    <h2>
+
+                        {{ female_students }}
+
+                    </h2>
+
+                    <p>
+
+                        Female Students
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Departments -->
+
+            <div class="dashboard-card">
+
+                <div class="card-glow"></div>
+
+                <div class="card-icon">
+
+                    🏢
+
+                </div>
+
+                <div class="card-info">
+
+                    <h2>
+
+                        {{ departments }}
+
+                    </h2>
+
+                    <p>
+
+                        Departments
+
+                    </p>
+
+                </div>
 
             </div>
 
         </div>
 
 
-        <!-- Recent Students -->
+        <!-- =========================
+             ANALYTICS CHARTS
+        ========================= -->
+
+        <div class="charts-container">
+
+            <!-- Gender Chart -->
+
+            <div class="chart-card">
+
+                <div class="chart-glow"></div>
+
+                <h2>
+
+                    Gender Analytics
+
+                </h2>
+
+                <canvas id="genderChart"></canvas>
+
+            </div>
+
+
+            <!-- Department Chart -->
+
+            <div class="chart-card">
+
+                <div class="chart-glow"></div>
+
+                <h2>
+
+                    Department Analytics
+
+                </h2>
+
+                <canvas id="departmentChart"></canvas>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             RECENT STUDENTS
+        ========================= -->
 
         <div class="table-container">
 
-            <h2 class="recent-title">
+            <div class="section-header">
 
-                Recent Students
+                <h2 class="recent-title">
 
-            </h2>
+                    Recent Students
+
+                </h2>
+
+            </div>
 
             <table>
 
@@ -114,9 +275,11 @@
 
                         <th>Student ID</th>
 
-                        <th>Name</th>
+                        <th>Full Name</th>
 
                         <th>Course</th>
+
+                        <th>Department</th>
 
                     </tr>
 
@@ -128,20 +291,44 @@
 
                     <tr>
 
+                        <!-- Student ID -->
+
                         <td>
+
                             {{ student.student_id }}
-                        </td>
-
-                        <td>
-
-                            {{ student.first_name }}
-
-                            {{ student.last_name }}
 
                         </td>
 
+                        <!-- Full Name -->
+
                         <td>
+
+                            <a
+                                href="/student/{{ student.id }}"
+                                class="student-link"
+                            >
+
+                                {{ student.first_name }}
+                                {{ student.last_name }}
+
+                            </a>
+
+                        </td>
+
+                        <!-- Course -->
+
+                        <td>
+
                             {{ student.course }}
+
+                        </td>
+
+                        <!-- Department -->
+
+                        <td>
+
+                            {{ student.department }}
+
                         </td>
 
                     </tr>
@@ -155,6 +342,226 @@
         </div>
 
     </div>
+
+
+    <!-- =========================
+         CHART JS
+    ========================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <!-- =========================
+         CINEMATIC CHART SCRIPT
+    ========================= -->
+
+    <script>
+
+        // =========================
+        // GENDER CHART
+        // =========================
+
+        const genderChart = document
+        .getElementById(
+            'genderChart'
+        );
+
+        new Chart(genderChart, {
+
+            type: 'doughnut',
+
+            data: {
+
+                labels: [
+
+                    'Male',
+                    'Female'
+
+                ],
+
+                datasets: [{
+
+                    data: [
+
+                        {{ male_students }},
+                        {{ female_students }}
+
+                    ],
+
+                    backgroundColor: [
+
+                        '#38bdf8',
+                        '#f472b6'
+
+                    ],
+
+                    hoverOffset: 25,
+
+                    borderWidth: 0
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                cutout: '68%',
+
+                animation: {
+
+                    animateScale: true,
+
+                    animateRotate: true,
+
+                    duration: 2500
+
+                },
+
+                plugins: {
+
+                    legend: {
+
+                        labels: {
+
+                            color: 'white',
+
+                            font: {
+
+                                size: 16
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        });
+
+
+        // =========================
+        // DEPARTMENT CHART
+        // =========================
+
+        const departmentChart = document
+        .getElementById(
+            'departmentChart'
+        );
+
+        new Chart(departmentChart, {
+
+            type: 'bar',
+
+            data: {
+
+                labels: [
+
+                    'Departments'
+
+                ],
+
+                datasets: [{
+
+                    label: 'Total Departments',
+
+                    data: [
+
+                        {{ departments }}
+
+                    ],
+
+                    backgroundColor: [
+
+                        '#22c55e'
+
+                    ],
+
+                    borderRadius: 20,
+
+                    borderSkipped: false
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                animation: {
+
+                    duration: 2500
+
+                },
+
+                plugins: {
+
+                    legend: {
+
+                        labels: {
+
+                            color: 'white',
+
+                            font: {
+
+                                size: 15
+
+                            }
+
+                        }
+
+                    }
+
+                },
+
+                scales: {
+
+                    x: {
+
+                        ticks: {
+
+                            color: 'white'
+
+                        },
+
+                        grid: {
+
+                            color:
+                            'rgba(255,255,255,0.05)'
+
+                        }
+
+                    },
+
+                    y: {
+
+                        ticks: {
+
+                            color: 'white'
+
+                        },
+
+                        grid: {
+
+                            color:
+                            'rgba(255,255,255,0.05)'
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        });
+
+    </script>
 
 </body>
 

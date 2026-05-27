@@ -17,7 +17,9 @@
 
 <body>
 
-    <!-- Sidebar -->
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
 
     <div class="sidebar">
 
@@ -58,7 +60,9 @@
     </div>
 
 
-    <!-- Main Content -->
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
 
     <div class="main-content">
 
@@ -75,7 +79,9 @@
         </div>
 
 
-        <!-- Search Form -->
+        <!-- =========================
+             SEARCH FORM
+        ========================= -->
 
         <form
             method="GET"
@@ -98,12 +104,17 @@
         </form>
 
 
-        <!-- Student Form -->
+        <!-- =========================
+             STUDENT FORM
+        ========================= -->
 
         <form
             method="POST"
+            enctype="multipart/form-data"
             class="student-form"
         >
+
+            <!-- Student ID -->
 
             <input
                 type="text"
@@ -112,12 +123,16 @@
                 required
             >
 
+            <!-- First Name -->
+
             <input
                 type="text"
                 name="first_name"
                 placeholder="First Name"
                 required
             >
+
+            <!-- Last Name -->
 
             <input
                 type="text"
@@ -126,11 +141,15 @@
                 required
             >
 
+            <!-- Gender -->
+
             <input
                 type="text"
                 name="gender"
                 placeholder="Gender"
             >
+
+            <!-- Email -->
 
             <input
                 type="email"
@@ -139,11 +158,15 @@
                 required
             >
 
+            <!-- Phone -->
+
             <input
                 type="text"
                 name="phone"
                 placeholder="Phone Number"
             >
+
+            <!-- Course -->
 
             <input
                 type="text"
@@ -151,11 +174,15 @@
                 placeholder="Course"
             >
 
+            <!-- Department -->
+
             <input
                 type="text"
                 name="department"
                 placeholder="Department"
             >
+
+            <!-- Year -->
 
             <input
                 type="text"
@@ -163,10 +190,21 @@
                 placeholder="Year Of Study"
             >
 
+            <!-- Admission Date -->
+
             <input
                 type="date"
                 name="admission_date"
             >
+
+            <!-- Profile Image -->
+
+            <input
+                type="file"
+                name="profile_image"
+            >
+
+            <!-- Submit -->
 
             <button type="submit">
 
@@ -177,7 +215,9 @@
         </form>
 
 
-        <!-- Students Table -->
+        <!-- =========================
+             STUDENTS TABLE
+        ========================= -->
 
         <div class="table-container">
 
@@ -191,9 +231,7 @@
 
                         <th>Student ID</th>
 
-                        <th>First Name</th>
-
-                        <th>Last Name</th>
+                        <th>Full Name</th>
 
                         <th>Gender</th>
 
@@ -221,34 +259,112 @@
 
                     <tr>
 
-                        <td>{{ student.id }}</td>
+                        <!-- ID -->
 
-                        <td>{{ student.student_id }}</td>
+                        <td>
 
-                        <td>{{ student.first_name }}</td>
+                            {{ student.id }}
 
-                        <td>{{ student.last_name }}</td>
+                        </td>
 
-                        <td>{{ student.gender }}</td>
 
-                        <td>{{ student.email }}</td>
+                        <!-- Student ID -->
 
-                        <td>{{ student.phone }}</td>
+                        <td>
 
-                        <td>{{ student.course }}</td>
+                            {{ student.student_id }}
 
-                        <td>{{ student.department }}</td>
+                        </td>
 
-                        <td>{{ student.year_of_study }}</td>
 
-                        <td>{{ student.admission_date }}</td>
+                        <!-- Full Name -->
+
+                        <td>
+
+                            <a
+                                href="/student/{{ student.id }}"
+                                class="student-link"
+                            >
+
+                                {{ student.first_name }}
+                                {{ student.last_name }}
+
+                            </a>
+
+                        </td>
+
+
+                        <!-- Gender -->
+
+                        <td>
+
+                            {{ student.gender }}
+
+                        </td>
+
+
+                        <!-- Email -->
+
+                        <td>
+
+                            {{ student.email }}
+
+                        </td>
+
+
+                        <!-- Phone -->
+
+                        <td>
+
+                            {{ student.phone }}
+
+                        </td>
+
+
+                        <!-- Course -->
+
+                        <td>
+
+                            {{ student.course }}
+
+                        </td>
+
+
+                        <!-- Department -->
+
+                        <td>
+
+                            {{ student.department }}
+
+                        </td>
+
+
+                        <!-- Year -->
+
+                        <td>
+
+                            {{ student.year_of_study }}
+
+                        </td>
+
+
+                        <!-- Admission Date -->
+
+                        <td>
+
+                            {{ student.admission_date }}
+
+                        </td>
+
+
+                        <!-- Action Buttons -->
 
                         <td class="action-buttons">
 
-                            <!-- Edit Button -->
+                            <!-- Edit -->
 
                             <a
-                                href="#"
+                                href="/edit/{{ student.id }}"
                                 class="edit-btn"
                                 title="Edit Student"
                             >
@@ -258,12 +374,13 @@
                             </a>
 
 
-                            <!-- Delete Button -->
+                            <!-- Delete -->
 
                             <form
                                 action="/delete/{{ student.id }}"
                                 method="POST"
                                 onsubmit="return confirm('Move student to trash?')"
+                                style="display:inline;"
                             >
 
                                 <button

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Student Profile</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <div class="sidebar">
+
+        <h2 class="logo-text">
+
+            Deployed By Fardin
+
+        </h2>
+
+        <ul>
+
+            <li>
+                <a href="/">Dashboard</a>
+            </li>
+
+            <li>
+                <a href="/students">Students</a>
+            </li>
+
+            <li>
+                <a href="/trash">Trash</a>
+            </li>
+
+            <li>
+                <a href="/logout">Logout</a>
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <div class="main-content">
+
+        <!-- Navbar -->
+
+        <div class="navbar">
+
+            <h1 class="main-title">
+
+                Student Profile
+
+            </h1>
+
+        </div>
+
+
+        <!-- =========================
+             PROFILE CARD
+        ========================= -->
+
+        <div class="profile-card">
+
+            <!-- Avatar -->
+
+            <div class="profile-avatar">
+
+                {% if student.profile_image %}
+
+                    <img
+                        src="{{ url_for('static', filename='uploads/' + student.profile_image) }}"
+                        alt="Profile Image"
+                        class="profile-image"
+                    >
+
+                {% else %}
+
+                    👨‍🎓
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- Full Name -->
+
+            <h2 class="profile-name">
+
+                {{ student.first_name }}
+                {{ student.last_name }}
+
+            </h2>
+
+
+            <!-- Course -->
+
+            <p class="profile-course">
+
+                {{ student.course }}
+
+            </p>
+
+
+            <!-- =========================
+                 PROFILE GRID
+            ========================= -->
+
+            <div class="profile-grid">
+
+                <!-- Student ID -->
+
+                <div class="profile-box">
+
+                    <h3>
+
+                        Student ID
+
+                    </h3>
+
+                    <p>
+
+                        {{ student.student_id }}
+
+                    </p>
+
+                </div>
+
+
+                <!-- Email -->
+
+                <div class="profile-box">
+
+                    <h3>
+
+                        Email
+
+                    </h3>
+
+                    <p>
+
+                        {{ student.email }}
+
+                    </p>
+
+                </div>
+
+
+                <!-- Phone -->
+
+                <div class="profile-box">
+
+                    <h3>
+
+                        Phone
+
+                    </h3>
+
+                    <p>
+
+                        {{ student.phone }}
+
+                    </p>
+
+                </div>
+
+
+                <!-- Department -->
+
+                <div class="profile-box">
+
+                    <h3>
+
+                        Department
+
+                    </h3>
+
+                    <p>
+
+                        {{ student.department }}
+
+                    </p>
+
+                </div>
+
+
+                <!-- Gender -->
+
+                <div class="profile-box">
+
+                    <h3>
+
+                        Gender
+
+                    </h3>
+
+                    <p>
+
+                        {{ student.gender }}
+
+                    </p>
+
+                </div>
+
+
+                <!-- Year -->
+
+                <div class="profile-box">
+
+                    <h3>
+
+                        Year Of Study
+
+                    </h3>
+
+                    <p>
+
+                        {{ student.year_of_study }}
+
+                    </p>
+
+                </div>
+
+
+                <!-- Admission Date -->
+
+                <div class="profile-box">
+
+                    <h3>
+
+                        Admission Date
+
+                    </h3>
+
+                    <p>
+
+                        {{ student.admission_date }}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 ACTION BUTTONS
+            ========================= -->
+
+            <div class="profile-actions">
+
+                <!-- Edit Profile -->
+
+                <a
+                    href="/edit/{{ student.id }}"
+                    class="profile-edit-btn"
+                >
+
+                    ✏️ Edit Profile
+
+                </a>
+
+
+                <!-- Back -->
+
+                <a
+                    href="/students"
+                    class="profile-back-btn"
+                >
+
+                    ← Back To Students
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

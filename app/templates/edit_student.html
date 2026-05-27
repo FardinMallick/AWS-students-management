@@ -17,65 +17,242 @@
 
 <body>
 
-<div class="main-content">
+    <!-- Sidebar -->
 
-    <div class="navbar">
+    <div class="sidebar">
 
-        <h1>Edit Student</h1>
+        <h2 class="logo-text">
+
+            Deployed By Fardin
+
+        </h2>
+
+        <ul>
+
+            <li>
+                <a href="/">Dashboard</a>
+            </li>
+
+            <li>
+                <a href="/students">Students</a>
+            </li>
+
+            <li>
+                <a href="/trash">Trash</a>
+            </li>
+
+            <li>
+                <a href="/logout">Logout</a>
+            </li>
+
+        </ul>
 
     </div>
 
-    <form method="POST"
-          class="student-form">
 
-        <input type="text"
-               name="student_id"
-               value="{{ student.student_id }}">
+    <!-- Main Content -->
 
-        <input type="text"
-               name="first_name"
-               value="{{ student.first_name }}">
+    <div class="main-content">
 
-        <input type="text"
-               name="last_name"
-               value="{{ student.last_name }}">
+        <!-- Navbar -->
 
-        <input type="text"
-               name="gender"
-               value="{{ student.gender }}">
+        <div class="navbar">
 
-        <input type="email"
-               name="email"
-               value="{{ student.email }}">
+            <h1 class="main-title">
 
-        <input type="text"
-               name="phone"
-               value="{{ student.phone }}">
+                Edit Student
 
-        <input type="text"
-               name="course"
-               value="{{ student.course }}">
+            </h1>
 
-        <input type="text"
-               name="department"
-               value="{{ student.department }}">
+        </div>
 
-        <input type="text"
-               name="year_of_study"
-               value="{{ student.year_of_study }}">
 
-        <input type="date"
-               name="admission_date">
+        <!-- Edit Card -->
 
-        <button type="submit">
+        <div class="edit-card">
 
-            Update Student
+            <!-- Edit Form -->
 
-        </button>
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+                class="student-form"
+            >
 
-    </form>
+                <!-- Student ID -->
 
-</div>
+                <input
+                    type="text"
+                    name="student_id"
+                    value="{{ student.student_id }}"
+                    placeholder="Student ID"
+                    required
+                >
+
+                <!-- First Name -->
+
+                <input
+                    type="text"
+                    name="first_name"
+                    value="{{ student.first_name }}"
+                    placeholder="First Name"
+                    required
+                >
+
+                <!-- Last Name -->
+
+                <input
+                    type="text"
+                    name="last_name"
+                    value="{{ student.last_name }}"
+                    placeholder="Last Name"
+                    required
+                >
+
+                <!-- Gender -->
+
+                <input
+                    type="text"
+                    name="gender"
+                    value="{{ student.gender }}"
+                    placeholder="Gender"
+                >
+
+                <!-- Email -->
+
+                <input
+                    type="email"
+                    name="email"
+                    value="{{ student.email }}"
+                    placeholder="Email"
+                    required
+                >
+
+                <!-- Phone -->
+
+                <input
+                    type="text"
+                    name="phone"
+                    value="{{ student.phone }}"
+                    placeholder="Phone Number"
+                >
+
+                <!-- Course -->
+
+                <input
+                    type="text"
+                    name="course"
+                    value="{{ student.course }}"
+                    placeholder="Course"
+                >
+
+                <!-- Department -->
+
+                <input
+                    type="text"
+                    name="department"
+                    value="{{ student.department }}"
+                    placeholder="Department"
+                >
+
+                <!-- Year -->
+
+                <input
+                    type="text"
+                    name="year_of_study"
+                    value="{{ student.year_of_study }}"
+                    placeholder="Year Of Study"
+                >
+
+                <!-- Admission Date -->
+
+                <input
+                    type="date"
+                    name="admission_date"
+                    value="{{ student.admission_date }}"
+                >
+
+
+                <!-- =========================
+                     CURRENT PROFILE IMAGE
+                ========================= -->
+
+                <div class="current-image-box">
+
+                    <p class="image-label">
+
+                        Current Profile Picture
+
+                    </p>
+
+                    {% if student.profile_image %}
+
+                        <img
+                            src="{{ url_for('static', filename='uploads/' + student.profile_image) }}"
+                            alt="Profile Image"
+                            class="edit-profile-image"
+                        >
+
+                    {% else %}
+
+                        <p class="no-image-text">
+
+                            No Profile Image Uploaded
+
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- =========================
+                     NEW PROFILE IMAGE
+                ========================= -->
+
+                <input
+                    type="file"
+                    name="profile_image"
+                    class="file-input"
+                >
+
+
+                <!-- =========================
+                     BUTTONS
+                ========================= -->
+
+                <div class="edit-buttons">
+
+                    <!-- Update -->
+
+                    <button
+                        type="submit"
+                        class="update-btn"
+                    >
+
+                        Update Student
+
+                    </button>
+
+
+                    <!-- Cancel -->
+
+                    <a
+                        href="/students"
+                        class="cancel-btn"
+                    >
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
 
 </body>
 
