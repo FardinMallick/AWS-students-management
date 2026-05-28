@@ -2,49 +2,71 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 
-# Database Object
+# =========================
+# DATABASE OBJECT
+# =========================
 
 db = SQLAlchemy()
 
 
-# Create Flask App
+# =========================
+# CREATE FLASK APP
+# =========================
 
 def create_app():
 
     app = Flask(__name__)
-    app.config[
-    "UPLOAD_FOLDER"
-] = "app/static/uploads"
 
-    # Secret Key
+    # =========================
+    # SECRET KEY
+    # =========================
 
     app.secret_key = "fardin_secret_key"
 
-    # MySQL Database Configuration
+    # =========================
+    # UPLOAD FOLDER
+    # =========================
+
+    app.config[
+        "UPLOAD_FOLDER"
+    ] = "app/static/uploads"
+
+    # =========================
+    # SQLITE DATABASE
+    # =========================
 
     app.config[
         "SQLALCHEMY_DATABASE_URI"
-    ] = "mysql+pymysql://root:fardin0102@localhost/student_management"
+    ] = "sqlite:///database.db"
 
     app.config[
         "SQLALCHEMY_TRACK_MODIFICATIONS"
     ] = False
 
-
-    # Initialize Database
+    # =========================
+    # INITIALIZE DATABASE
+    # =========================
 
     db.init_app(app)
 
-
-    # Import Routes
+    # =========================
+    # IMPORT ROUTES
+    # =========================
 
     from app.routes.main_routes import main
 
-
-    # Register Blueprint
+    # =========================
+    # REGISTER BLUEPRINT
+    # =========================
 
     app.register_blueprint(main)
 
+    # =========================
+    # CREATE DATABASE TABLES
+    # =========================
+
+    with app.app_context():
+
+        db.create_all()
 
     return app
-
