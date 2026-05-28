@@ -2408,3 +2408,74 @@ table tbody tr:hover{
         font-size:26px;
     }
 }
+/* =========================
+   SIDEBAR LINK FIX
+========================= */
+
+.sidebar-link{
+
+    text-decoration:none !important;
+
+    color:#f8fafc !important;
+
+    font-size:20px;
+
+    font-weight:600;
+
+    display:flex;
+
+    align-items:center;
+
+    padding:12px 18px;
+
+    border-radius:14px;
+
+    transition:0.4s;
+
+    position:relative;
+}
+
+/* Hover */
+
+.sidebar-link:hover{
+
+    color:#38bdf8 !important;
+
+    background:
+    rgba(56,189,248,0.10);
+
+    transform:translateX(8px);
+
+    box-shadow:
+    0 0 18px rgba(56,189,248,0.15);
+}
+
+/* Left Glow Line */
+
+.sidebar-link::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:4px;
+
+    height:0%;
+
+    background:#38bdf8;
+
+    border-radius:20px;
+
+    transition:0.4s;
+}
+
+.sidebar-link:hover::before{
+
+    height:70%;
+}

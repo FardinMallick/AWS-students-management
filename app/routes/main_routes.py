@@ -750,3 +750,60 @@ def report_card(id):
 
         final_grade=final_grade
     )
+# =========================
+# ANALYTICS PAGE
+# =========================
+
+@main.route("/analytics")
+def analytics():
+
+    if "user" not in session:
+
+        return redirect(
+            url_for("main.login")
+        )
+
+    # Total Students
+
+    total_students = Student.query.filter_by(
+        is_deleted=False
+    ).count()
+
+    # Male Students
+
+    male_students = Student.query.filter_by(
+        gender="Male",
+        is_deleted=False
+    ).count()
+
+    # Female Students
+
+    female_students = Student.query.filter_by(
+        gender="Female",
+        is_deleted=False
+    ).count()
+
+    # Departments
+
+    departments = db.session.query(
+        Student.department
+    ).distinct().count()
+
+    # Total Results
+
+    total_results = Result.query.count()
+
+    return render_template(
+
+        "analytics.html",
+
+        total_students=total_students,
+
+        male_students=male_students,
+
+        female_students=female_students,
+
+        departments=departments,
+
+        total_results=total_results
+    )

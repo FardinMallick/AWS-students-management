@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Analytics Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Chart JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <div class="sidebar">
+
+        <h2 class="logo-text">
+
+            Deployed By Fardin
+
+        </h2>
+
+        <ul>
+
+            <li>
+                <a href="/">Dashboard</a>
+            </li>
+
+            <li>
+                <a href="/students">Students</a>
+            </li>
+
+            <li>
+                <a href="/attendance">Attendance</a>
+            </li>
+
+            <li>
+                <a href="/results">Results</a>
+            </li>
+
+            <li>
+                <a href="/analytics">Analytics</a>
+            </li>
+
+            <li>
+                <a href="/trash">Trash</a>
+            </li>
+
+            <li>
+                <a href="/logout">Logout</a>
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <div class="main-content">
+
+        <!-- Title -->
+
+        <div class="navbar">
+
+            <h1 class="main-title">
+
+                Analytics Dashboard
+
+            </h1>
+
+        </div>
+
+
+        <!-- =========================
+             STATS CARDS
+        ========================= -->
+
+        <div class="analytics-cards">
+
+            <!-- Total Students -->
+
+            <div class="analytics-card">
+
+                <h2>Total Students</h2>
+
+                <p>
+
+                    {{ total_students }}
+
+                </p>
+
+            </div>
+
+
+            <!-- Male Students -->
+
+            <div class="analytics-card">
+
+                <h2>Male Students</h2>
+
+                <p>
+
+                    {{ male_students }}
+
+                </p>
+
+            </div>
+
+
+            <!-- Female Students -->
+
+            <div class="analytics-card">
+
+                <h2>Female Students</h2>
+
+                <p>
+
+                    {{ female_students }}
+
+                </p>
+
+            </div>
+
+
+            <!-- Departments -->
+
+            <div class="analytics-card">
+
+                <h2>Departments</h2>
+
+                <p>
+
+                    {{ departments }}
+
+                </p>
+
+            </div>
+
+
+            <!-- Results -->
+
+            <div class="analytics-card">
+
+                <h2>Total Results</h2>
+
+                <p>
+
+                    {{ total_results }}
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             CHARTS
+        ========================= -->
+
+        <div class="charts-container">
+
+            <!-- Gender Chart -->
+
+            <div class="chart-card">
+
+                <h2>
+
+                    Gender Analytics
+
+                </h2>
+
+                <canvas id="genderChart"></canvas>
+
+            </div>
+
+
+            <!-- Department Chart -->
+
+            <div class="chart-card">
+
+                <h2>
+
+                    Department Analytics
+
+                </h2>
+
+                <canvas id="departmentChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         CHART JS
+    ========================= -->
+
+    <script>
+
+        // =========================
+        // GENDER CHART
+        // =========================
+
+        const genderCtx = document
+            .getElementById(
+                'genderChart'
+            );
+
+        new Chart(genderCtx, {
+
+            type: 'doughnut',
+
+            data: {
+
+                labels: [
+
+                    'Male',
+                    'Female'
+
+                ],
+
+                datasets: [{
+
+                    data: [
+
+                        {{ male_students }},
+                        {{ female_students }}
+
+                    ],
+
+                    backgroundColor: [
+
+                        '#38bdf8',
+                        '#ec4899'
+
+                    ],
+
+                    borderWidth: 0
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                plugins: {
+
+                    legend: {
+
+                        labels: {
+
+                            color: 'white',
+
+                            font: {
+
+                                size: 16
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+
+        // =========================
+        // DEPARTMENT CHART
+        // =========================
+
+        const departmentCtx = document
+            .getElementById(
+                'departmentChart'
+            );
+
+        new Chart(departmentCtx, {
+
+            type: 'bar',
+
+            data: {
+
+                labels: [
+
+                    'Departments'
+
+                ],
+
+                datasets: [{
+
+                    label: 'Total Departments',
+
+                    data: [
+
+                        {{ departments }}
+
+                    ],
+
+                    backgroundColor: [
+
+                        '#22c55e'
+
+                    ],
+
+                    borderRadius: 20
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                plugins: {
+
+                    legend: {
+
+                        labels: {
+
+                            color: 'white',
+
+                            font: {
+
+                                size: 16
+                            }
+                        }
+                    }
+                },
+
+                scales: {
+
+                    y: {
+
+                        ticks: {
+
+                            color: 'white'
+                        }
+                    },
+
+                    x: {
+
+                        ticks: {
+
+                            color: 'white'
+                        }
+                    }
+                }
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>
