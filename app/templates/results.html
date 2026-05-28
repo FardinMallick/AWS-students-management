@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Results Management</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <div class="sidebar">
+
+        <h2 class="logo-text">
+
+            Deployed By Fardin
+
+        </h2>
+
+        <ul>
+
+            <li>
+                <a href="/">Dashboard</a>
+            </li>
+
+            <li>
+                <a href="/students">Students</a>
+            </li>
+
+            <li>
+                <a href="/attendance">Attendance</a>
+            </li>
+
+            <li>
+                <a href="/results">Results</a>
+            </li>
+
+            <li>
+                <a href="/trash">Trash</a>
+            </li>
+
+            <li>
+                <a href="/logout">Logout</a>
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <div class="main-content">
+
+        <!-- Navbar -->
+
+        <div class="navbar">
+
+            <h1 class="main-title">
+
+                Results Management
+
+            </h1>
+
+        </div>
+
+
+        <!-- =========================
+             RESULT FORM
+        ========================= -->
+
+        <form
+            method="POST"
+            class="student-form"
+        >
+
+            <!-- Student -->
+
+            <select
+                name="student_id"
+                required
+                class="result-select"
+            >
+
+                <option value="">
+
+                    Select Student
+
+                </option>
+
+                {% for student in students %}
+
+                <option value="{{ student.id }}">
+
+                    {{ student.first_name }}
+                    {{ student.last_name }}
+
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <!-- Subject -->
+
+            <input
+                type="text"
+                name="subject"
+                placeholder="Subject"
+                required
+            >
+
+
+            <!-- Marks -->
+
+            <input
+                type="number"
+                name="marks"
+                placeholder="Marks"
+                required
+            >
+
+
+            <!-- Exam Type -->
+
+            <input
+                type="text"
+                name="exam_type"
+                placeholder="Exam Type"
+                required
+            >
+
+
+            <!-- Submit -->
+
+            <button type="submit">
+
+                Add Result
+
+            </button>
+
+        </form>
+
+
+        <!-- =========================
+             RESULT TABLE
+        ========================= -->
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Student Name</th>
+
+                        <th>Subject</th>
+
+                        <th>Marks</th>
+
+                        <th>Grade</th>
+
+                        <th>Exam Type</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for result in results %}
+
+                    <tr>
+
+                        <!-- ID -->
+
+                        <td>
+
+                            {{ result.id }}
+
+                        </td>
+
+
+                        <!-- Student Name -->
+
+                        <td>
+
+                            {% for student in students %}
+
+                                {% if student.id == result.student_id %}
+
+                                    <a
+                                        href="/student/{{ student.id }}"
+                                        class="student-link"
+                                    >
+
+                                        {{ student.first_name }}
+                                        {{ student.last_name }}
+
+                                    </a>
+
+                                {% endif %}
+
+                            {% endfor %}
+
+                        </td>
+
+
+                        <!-- Subject -->
+
+                        <td>
+
+                            {{ result.subject }}
+
+                        </td>
+
+
+                        <!-- Marks -->
+
+                        <td>
+
+                            {{ result.marks }}
+
+                        </td>
+
+
+                        <!-- Grade -->
+
+                        <td>
+
+                            <span class="grade-badge grade-{{ result.grade|lower|replace('+','plus') }}">
+
+                                {{ result.grade }}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- Exam Type -->
+
+                        <td>
+
+                            {{ result.exam_type }}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

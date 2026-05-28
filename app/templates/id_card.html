@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Digital ID Card</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="modern-id-wrapper">
+
+        <!-- BACK BUTTON -->
+
+        <a
+            href="/student/{{ student.id }}"
+            class="modern-back-btn"
+        >
+
+            ← Back To Profile
+
+        </a>
+
+
+        <!-- ID CARD -->
+
+        <div class="modern-id-card">
+
+            <!-- Glow -->
+
+            <div class="card-glow"></div>
+
+
+            <!-- Top -->
+
+            <div class="modern-id-top">
+
+                <div>
+
+                    <h1>
+
+                        STUDENT ID
+
+                    </h1>
+
+                    <p>
+
+                        Student Management System
+
+                    </p>
+
+                </div>
+
+                <div class="verified-badge">
+
+                    ✔
+
+                </div>
+
+            </div>
+
+
+            <!-- Profile Section -->
+
+            <div class="modern-profile-section">
+
+                {% if student.profile_image %}
+
+                    <img
+                        src="{{ url_for('static', filename='uploads/' + student.profile_image) }}"
+                        class="modern-id-image"
+                    >
+
+                {% else %}
+
+                    <div class="modern-avatar">
+
+                        👨‍🎓
+
+                    </div>
+
+                {% endif %}
+
+
+                <div class="modern-user-info">
+
+                    <h2>
+
+                        {{ student.first_name }}
+                        {{ student.last_name }}
+
+                    </h2>
+
+                    <p>
+
+                        {{ student.course }}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Details -->
+
+            <div class="modern-id-details">
+
+                <div class="modern-detail-card">
+
+                    <span>
+
+                        Student ID
+
+                    </span>
+
+                    <h3>
+
+                        {{ student.student_id }}
+
+                    </h3>
+
+                </div>
+
+
+                <div class="modern-detail-card">
+
+                    <span>
+
+                        Department
+
+                    </span>
+
+                    <h3>
+
+                        {{ student.department }}
+
+                    </h3>
+
+                </div>
+
+
+                <div class="modern-detail-card">
+
+                    <span>
+
+                        Year
+
+                    </span>
+
+                    <h3>
+
+                        {{ student.year_of_study }}
+
+                    </h3>
+
+                </div>
+
+
+                <div class="modern-detail-card">
+
+                    <span>
+
+                        Gender
+
+                    </span>
+
+                    <h3>
+
+                        {{ student.gender }}
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <!-- Bottom -->
+
+            <div class="modern-id-bottom">
+
+                <div class="fake-chip"></div>
+
+                <button
+                    onclick="window.print()"
+                    class="download-id-btn"
+                >
+
+                    ⬇ Download Card
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -15,6 +15,7 @@ from app import db
 
 from app.models.student import Student
 from app.models.attendance import Attendance
+from app.models.result import Result
 
 
 main = Blueprint("main", __name__)
@@ -525,4 +526,227 @@ def permanent_delete(id):
 
     return redirect(
         url_for("main.trash")
+    )
+
+
+# =========================
+# STUDENT ID CARD
+# =========================
+
+@main.route("/id-card/<int:id>")
+def id_card(id):
+
+    if "user" not in session:
+
+        return redirect(
+            url_for("main.login")
+        )
+
+    student = Student.query.get_or_404(id)
+
+    return render_template(
+
+        "id_card.html",
+
+        student=student
+    )
+
+
+# =========================
+# RESULTS PAGE
+# =========================
+
+@main.route(
+    "/results",
+    methods=["GET", "POST"]
+)
+def results():
+
+    if "user" not in session:
+
+        return redirect(
+            url_for("main.login")
+        )
+
+    # =========================
+    # ADD RESULT
+    # =========================
+
+    if request.method == "POST":
+
+        marks = int(
+            request.form["marks"]
+        )
+
+        # =========================
+        # GRADE SYSTEM
+        # =========================
+
+        if marks >= 90:
+
+            grade = "A+"
+
+        elif marks >= 80:
+
+            grade = "A"
+
+        elif marks >= 70:
+
+            grade = "B"
+
+        elif marks >= 60:
+
+            grade = "C"
+
+        elif marks >= 50:
+
+            grade = "D"
+
+        else:
+
+            grade = "F"
+
+        result = Result(
+
+            student_id=request.form["student_id"],
+
+            subject=request.form["subject"],
+
+            marks=marks,
+
+            grade=grade,
+
+            exam_type=request.form["exam_type"]
+        )
+
+        db.session.add(result)
+
+        db.session.commit()
+
+        return redirect(
+            url_for("main.results")
+        )
+
+    # =========================
+    # FETCH DATA
+    # =========================
+
+    results = Result.query.all()
+
+    students = Student.query.filter_by(
+        is_deleted=False
+    ).all()
+
+    return render_template(
+
+        "results.html",
+
+        results=results,
+
+        students=students
+    )
+
+
+# =========================
+# REPORT CARD
+# =========================
+
+@main.route("/report-card/<int:id>")
+def report_card(id):
+
+    if "user" not in session:
+
+        return redirect(
+            url_for("main.login")
+        )
+
+    # =========================
+    # GET STUDENT
+    # =========================
+
+    student = Student.query.get_or_404(id)
+
+    # =========================
+    # GET RESULTS
+    # =========================
+
+    results = Result.query.filter_by(
+        student_id=id
+    ).all()
+
+    # =========================
+    # TOTAL MARKS
+    # =========================
+
+    total_marks = sum(
+
+        result.marks
+
+        for result in results
+    )
+
+    # =========================
+    # TOTAL SUBJECTS
+    # =========================
+
+    total_subjects = len(results)
+
+    # =========================
+    # PERCENTAGE
+    # =========================
+
+    if total_subjects > 0:
+
+        percentage = round(
+
+            total_marks / total_subjects,
+
+            2
+        )
+
+    else:
+
+        percentage = 0
+
+    # =========================
+    # FINAL GRADE
+    # =========================
+
+    if percentage >= 90:
+
+        final_grade = "A+"
+
+    elif percentage >= 80:
+
+        final_grade = "A"
+
+    elif percentage >= 70:
+
+        final_grade = "B"
+
+    elif percentage >= 60:
+
+        final_grade = "C"
+
+    elif percentage >= 50:
+
+        final_grade = "D"
+
+    else:
+
+        final_grade = "F"
+
+    return render_template(
+
+        "report_card.html",
+
+        student=student,
+
+        results=results,
+
+        total_marks=total_marks,
+
+        percentage=percentage,
+
+        final_grade=final_grade
     )

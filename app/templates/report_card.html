@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Student Report Card</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- =========================
+         REPORT PAGE
+    ========================= -->
+
+    <div class="report-page">
+
+
+        <!-- =========================
+             REPORT CARD
+        ========================= -->
+
+        <div class="report-card">
+
+
+            <!-- =========================
+                 TOP HEADER
+            ========================= -->
+
+            <div class="report-top-header">
+
+                <div>
+
+                    <h1 class="report-main-title">
+
+                        STUDENT REPORT CARD
+
+                    </h1>
+
+                    <p class="report-subtitle">
+
+                        Student Management System
+
+                    </p>
+
+                </div>
+
+
+                <!-- Final Grade -->
+
+                <div class="final-grade-box grade-{{ final_grade|lower|replace('+','plus') }}">
+
+                    {{ final_grade }}
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 STUDENT SECTION
+            ========================= -->
+
+            <div class="report-student-section">
+
+
+                <!-- Left -->
+
+                <div class="report-left">
+
+
+                    <!-- Profile Image -->
+
+                    <div class="report-image-box">
+
+                        {% if student.profile_image %}
+
+                        <img
+                            src="{{ url_for('static', filename='uploads/' + student.profile_image) }}"
+                            alt="Student"
+                            class="report-profile-image"
+                        >
+
+                        {% else %}
+
+                        <div class="report-avatar">
+
+                            👨‍🎓
+
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Student Info -->
+
+                    <div class="student-main-info">
+
+                        <h2>
+
+                            {{ student.first_name }}
+                            {{ student.last_name }}
+
+                        </h2>
+
+                        <p>
+
+                            {{ student.course }}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Right -->
+
+                <div class="report-right">
+
+                    <div class="report-info-card">
+
+                        <span>
+
+                            Student ID
+
+                        </span>
+
+                        <h3>
+
+                            {{ student.student_id }}
+
+                        </h3>
+
+                    </div>
+
+
+                    <div class="report-info-card">
+
+                        <span>
+
+                            Department
+
+                        </span>
+
+                        <h3>
+
+                            {{ student.department }}
+
+                        </h3>
+
+                    </div>
+
+
+                    <div class="report-info-card">
+
+                        <span>
+
+                            Year
+
+                        </span>
+
+                        <h3>
+
+                            {{ student.year_of_study }}
+
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 RESULT TABLE
+            ========================= -->
+
+            <div class="report-table-wrapper">
+
+                <table class="report-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Subject</th>
+
+                            <th>Marks</th>
+
+                            <th>Grade</th>
+
+                            <th>Exam Type</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for result in results %}
+
+                        <tr>
+
+                            <td>
+
+                                {{ result.subject }}
+
+                            </td>
+
+                            <td>
+
+                                {{ result.marks }}
+
+                            </td>
+
+                            <td>
+
+                                <span class="grade-badge grade-{{ result.grade|lower|replace('+','plus') }}">
+
+                                    {{ result.grade }}
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                {{ result.exam_type }}
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- =========================
+                 SUMMARY SECTION
+            ========================= -->
+
+            <div class="report-summary-grid">
+
+
+                <!-- Total Marks -->
+
+                <div class="report-summary-card">
+
+                    <h3>
+
+                        Total Marks
+
+                    </h3>
+
+                    <p>
+
+                        {{ total_marks }}
+
+                    </p>
+
+                </div>
+
+
+                <!-- Percentage -->
+
+                <div class="report-summary-card percentage-card">
+
+                    <h3>
+
+                        Percentage
+
+                    </h3>
+
+                    <div class="percentage-circle">
+
+                        {{ percentage }}%
+
+                    </div>
+
+                </div>
+
+
+                <!-- Final Result -->
+
+                <div class="report-summary-card">
+
+                    <h3>
+
+                        Final Result
+
+                    </h3>
+
+                    <p class="pass-status">
+
+                        {% if percentage >= 50 %}
+
+                            PASS ✅
+
+                        {% else %}
+
+                            FAIL ❌
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 FOOTER
+            ========================= -->
+
+            <div class="report-footer">
+
+                <p>
+
+                    Generated By Fardin Student Management System
+
+                </p>
+
+            </div>
+
+
+            <!-- =========================
+                 BUTTONS
+            ========================= -->
+
+            <div class="report-buttons">
+
+                <a
+                    href="/student/{{ student.id }}"
+                    class="profile-back-btn"
+                >
+
+                    ← Back Profile
+
+                </a>
+
+
+                <button
+                    onclick="window.print()"
+                    class="print-btn"
+                >
+
+                    🖨 Download Report
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+

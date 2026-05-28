@@ -38,9 +38,14 @@
             <li>
                 <a href="/students">Students</a>
             </li>
+
             <li>
-    <a href="/attendance">Attendance</a>
-</li>
+                <a href="/attendance">Attendance</a>
+            </li>
+
+            <li>
+                <a href="/results">Results</a>
+            </li>
 
             <li>
                 <a href="/trash">Trash</a>
@@ -94,7 +99,11 @@
 
                 {% else %}
 
-                    👨‍🎓
+                    <div class="default-avatar">
+
+                        👨‍🎓
+
+                    </div>
 
                 {% endif %}
 
@@ -275,6 +284,36 @@
                 >
 
                     ✏️ Edit Profile
+
+                </a>
+
+
+                <!-- Digital ID Card -->
+
+                <a
+                    href="/id-card/{{ student.id }}"
+                    class="profile-id-btn"
+                >
+
+                    <span class="id-icon">
+
+                        ⬢
+
+                    </span>
+
+                    Digital ID Card
+
+                </a>
+
+
+                <!-- Report Card -->
+
+                <a
+                    href="/report-card/{{ student.id }}"
+                    class="report-card-btn"
+                >
+
+                    📄 View Report Card
 
                 </a>
 
