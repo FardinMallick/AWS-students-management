@@ -215,7 +215,9 @@ def students():
 
             year_of_study=request.form["year_of_study"],
 
-            admission_date=request.form["admission_date"],
+            admission_date=date.fromisoformat(
+                request.form["admission_date"]
+            ),
 
             profile_image=filename
         )
