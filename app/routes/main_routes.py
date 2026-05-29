@@ -16,6 +16,7 @@ from app import db
 from app.models.student import Student
 from app.models.attendance import Attendance
 from app.models.result import Result
+from app.models.course import Course
 
 
 main = Blueprint("main", __name__)
@@ -808,4 +809,52 @@ def analytics():
         departments=departments,
 
         total_results=total_results
+    )
+
+# =========================
+# COURSES PAGE
+# =========================
+
+@main.route(
+    "/courses",
+    methods=["GET", "POST"]
+)
+def courses():
+
+    if "user" not in session:
+
+        return redirect(
+            url_for("main.login")
+        )
+
+    if request.method == "POST":
+
+        course = Course(
+
+            course_name=request.form["course_name"],
+
+            course_code=request.form["course_code"],
+
+            duration=request.form["duration"],
+
+            department=request.form["department"],
+
+            instructor=request.form["instructor"]
+        )
+
+        db.session.add(course)
+
+        db.session.commit()
+
+        return redirect(
+            url_for("main.courses")
+        )
+
+    courses = Course.query.all()
+
+    return render_template(
+
+        "courses.html",
+
+        courses=courses
     )
